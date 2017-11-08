@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
+const church = require('../controllers/church.js')
 
 /* GET home page. */
-router.get('/church', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/churches', church.getAllChurhes);
 
 module.exports = router;
