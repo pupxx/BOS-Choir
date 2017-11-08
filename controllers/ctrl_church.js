@@ -1,4 +1,4 @@
-const church  = require('../models/church.js');
+const church  = require('../models/mdl_church.js');
 
 function getAllChurches(req, res){
     church.getAllChurches().then((churches)=>{
