@@ -13,7 +13,6 @@ exports.up = function (knex) {
         table.string('part').notNullable().defaultTo('');
         table.boolean('admin').notNullable().defaultTo(false);
         table.string('position').notNullable().defaultTo('member');
-        table.string('part').notNullable().defaultTo('');
         table.integer('church_id').references('church.id').onDelete('CASCADE');
         table.timestamps(true, true);
     });

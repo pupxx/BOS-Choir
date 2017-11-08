@@ -1,13 +1,17 @@
-
-exports.seed = function(knex, Promise) {
-  // Deletes ALL existing entries
-  return knex('table_name').del()
-    .then(function () {
-      // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
-      ]);
+exports.seed = function (knex) {
+  return knex('announcement').del()
+    .then(() => {
+      return knex('announcement').insert([{
+        id: 1,
+        announcement: 'It\'s hard to seed files!!',
+        enddate: '2017-11-15',
+        created_at: new Date(),
+        updated_at: new Date()
+      }]);
+    })
+    .then(() => {
+      return knex.raw(
+        "SELECT setval('announcement_id_seq', (SELECT MAX(id) FROM announcement));"
+      );
     });
 };
