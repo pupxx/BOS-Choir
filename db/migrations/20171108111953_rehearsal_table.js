@@ -1,16 +1,13 @@
 exports.up = function (knex) {
-    return knex.schema.createTable('performance', (table) => {
+    return knex.schema.createTable('rehearsal', (table) => {
         table.increments();
-        table.text('perfname').notNullable().defaultTo('');
-        table.date('perfdate').notNullable().defaultTo('');
-        table.time('perftime').notNullable().defaultTo('');
-        table.text('menattire').notNullable().defaultTo('');
-        table.text('womenattire').notNullable().defaultTo('');
-        table.integer('church_id').references('church.id').onDelete('CASCADE');
+        table.date('rehearsedate').notNullable().defaultTo('');
+        table.time('rehearsetime').notNullable().defaultTo('');
+        table.text('rehearselocation').notNullable().defaultTo('');
         table.timestamps(true, true);
     });
 };
 
 exports.down = function (knex) {
-    return knex.schema.dropTable('performance');
+    return knex.schema.dropTable('rehearsal');
 };
