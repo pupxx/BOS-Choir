@@ -6,4 +6,11 @@ function getAllChurches(req, res){
     })
 }
 
-module.exports = {getAllChurches}
+function getOneChurch(req, res){
+    var id = req.params.id;
+    church.getOneChurch(id).then((church)=>{
+        res.send(church)
+    })
+}
+
+module.exports = {getAllChurches, getOneChurch}
