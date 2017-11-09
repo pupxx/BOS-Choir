@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const ctrl = require('../controllers/ctrl_performance')
 
-/* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
+router.get('/', ctrl.getAllPerformances);
+router.get('/:id', ctrl.getOnePerformance)
 
 module.exports = router;

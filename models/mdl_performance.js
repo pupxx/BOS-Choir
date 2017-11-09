@@ -5,8 +5,12 @@ class Performance {
 
   }
 
-  static getAllPerformaces() {
+  static getAllPerformances() {
     return knex('performance')
+  }
+
+  static getOnePerformance(id){
+    return knex('performance').where({id});
   }
 
 }
