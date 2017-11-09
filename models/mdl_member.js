@@ -9,6 +9,12 @@ class Member {
     return knex('member')
   }
 
+  static getOneMember(id){
+    console.log('!!!!!!');
+    return knex('member').where({id});
+  }
+
+
 }
 
 module.exports = Member
