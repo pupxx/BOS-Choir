@@ -6,7 +6,7 @@ class Rehearsal {
     }
 
     static getAllRehearsals() {
-        return knex('rehearsal')
+        return knex('rehearsal').innerJoin('church', 'church_id', 'church.id')
     }
 
 }

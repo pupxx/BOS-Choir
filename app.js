@@ -9,6 +9,7 @@ var church = require('./routes/church');
 var announcement = require('./routes/announcement');
 var performance = require('./routes/performance');
 var member = require('./routes/member');
+var rehearsals = require('./routes/rehearsal');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use('/churches', church)
 app.use('/announcements', announcement)
 app.use('/performances', performance)
 app.use('/members', member)
+app.use('/rehearsals', rehearsals)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
