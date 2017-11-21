@@ -10,6 +10,8 @@ var announcement = require('./routes/announcement');
 var performance = require('./routes/performance');
 var member = require('./routes/member');
 var rehearsals = require('./routes/rehearsal');
+var signup = require('./routes/signup');
+
 
 var app = express();
 
@@ -38,6 +40,7 @@ app.use('/announcements', announcement)
 app.use('/performances', performance)
 app.use('/members', member)
 app.use('/rehearsals', rehearsals)
+app.use('/signup', signup)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -54,7 +57,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.send('error');
+  res.send(err);
 });
 
 module.exports = app;
