@@ -3,6 +3,6 @@ var router = express.Router();
 var authentication = require('../controllers/auth/ctrl_authentication.js')
 
 /* GET home page. */
-router.post('/', authentication.validateEmailAndPass, authentication.checkForUser );
+router.post('/', authentication.validateEmailAndPass, authentication.checkForUser, authentication.addNewUser );
 
 module.exports = router;
