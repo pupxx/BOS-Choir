@@ -10,6 +10,7 @@ var performance = require('./routes/performance');
 var member = require('./routes/member');
 var rehearsals = require('./routes/rehearsal');
 var signup = require('./routes/signup');
+var signin = require('./routes/signin');
 
 
 var app = express();
@@ -35,6 +36,7 @@ app.use('/performances', performance)
 app.use('/members', member)
 app.use('/rehearsals', rehearsals)
 app.use('/signup', signup)
+app.use('/signin', signin)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

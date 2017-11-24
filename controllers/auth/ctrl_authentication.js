@@ -42,7 +42,6 @@ function checkForUser(req, res, next){
   });
 }
 
-
 function addNewUser(req, res, next){
   var {email, password} = req.body;
   bcrypt.hash(password, 12)
@@ -67,6 +66,10 @@ function tokenForUser(user){
   const timeStamp = new Date().getTime();
   return jwt.encode({ sub: user.id, iat: timeStamp }, config.secret)
 }
+
+//********************* SIGNIN AUTHENTICATION *************
+
+
 
 
 module.exports = { validateEmailAndPass, checkForUser, addNewUser }
