@@ -14,6 +14,7 @@ exports.up = function (knex) {
         table.boolean('admin').notNullable().defaultTo(false);
         table.string('position').notNullable().defaultTo('member');
         table.integer('church_id').references('church.id').onDelete('CASCADE');
+        table.string('hashed_password').defaultTo(null);
         table.timestamps(true, true);
     });
 };

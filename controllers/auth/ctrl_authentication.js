@@ -1,5 +1,9 @@
 const auth = require('../../models/auth/mdl_signup');
+const bcrypt = require('bcrypt-as-promised');
+const jwt = require('jwt-simple');
+const config = require('../../config.js')
 
+//*************************** SIGNUP ********************************
 
 function validateEmailAndPass (req, res, next) {
   if(!req.body.email) {
@@ -15,23 +19,54 @@ function validateEmailAndPass (req, res, next) {
     var err = 'Password field must not be blank'
     next(err)
   }
-
+  
   if(req.body.password.length < 6){
     var err = 'password must be at least 6 characters long';
     next(err)
-
-    //add validation for uppercase etc.
   }
+
+    //add validation for uppercase etc.  
   
   next()
 }
 
 function checkForUser(req, res, next){
-  var email = req.body.email;
-  console.log(email);
+  var {email, password} = req.body;
   auth.checkForUser(email).then((user)=>{
-    res.send(user)
-  })
+    if(user){
+      let err = "This user already exists";
+      next(err)
+    }else{
+      next()
+    }   
+  });
 }
 
-module.exports = { validateEmailAndPass, checkForUser }
+
+function addNewUser(req, res, next){
+  var {email, password} = req.body;
+  bcrypt.hash(password, 12)
+  .then((hashedPassword)=>{
+    let user = {
+      email: req.body.email,
+      hashed_password: hashedPassword
+    }
+    auth.addNewUser(user).then((addedUser)=>{
+      let newUser = addedUser[0]
+      delete newUser.hashed_password;
+      res.send({
+        token: tokenForUser(newUser),
+        admin: newUser.admin
+      });
+    })
+  })
+}
+// ******************  HELPER FUNCTION *******************
+
+function tokenForUser(user){
+  const timeStamp = new Date().getTime();
+  return jwt.encode({ sub: user.id, iat: timeStamp }, config.secret)
+}
+
+
+module.exports = { validateEmailAndPass, checkForUser, addNewUser }
