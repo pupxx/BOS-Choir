@@ -1,16 +1,22 @@
 const member = require('../models/mdl_member.js');
 
-function getAllMembers(req, res){
-    member.getAllMembers().then((members)=>{
-        res.send(members)
-    })
+async function getAllMembers(req, res){
+  try{
+    const members = await member.getAllMembers()
+    res.send(members)
+  }catch(err) {
+    next(err)
+  }
 }
 
-function getOneMember(req, res){
+async function getOneMember(req, res){
+  try{
     var id = req.params.id
-    member.getOneMember(id).then((member)=>{
-        res.send(member)
-    })
+    const singleMember = await member.getOneMember(id)
+    res.send(singleMember)
+  }catch(err) {
+    next(err)
+  }
 }
 
 module.exports = {getAllMembers, getOneMember};

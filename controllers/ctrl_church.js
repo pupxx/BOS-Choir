@@ -1,16 +1,22 @@
 const church  = require('../models/mdl_church.js');
 
-function getAllChurches(req, res){
-    church.getAllChurches().then((churches)=>{
-        res.send(churches)
-    })
+async function getAllChurches(req, res, next) {
+  try{
+    const churches = await church.getAllChurches()
+    res.send(churches)
+  }catch(err){
+    next(err)
+  }
 }
 
-function getOneChurch(req, res){
+async function getOneChurch(req, res, next){
+  try{
     var id = req.params.id;
-    church.getOneChurch(id).then((church)=>{
-        res.send(church)
-    })
+    const singleChurch = await church.getOneChurch(id)
+    res.send(singleChurch)
+  }catch(err) {
+    next(err)
+  }
 }
 
 module.exports = {getAllChurches, getOneChurch}

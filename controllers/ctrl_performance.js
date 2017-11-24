@@ -1,16 +1,22 @@
 const performance = require('../models/mdl_performance.js');
 
-function getAllPerformances(req, res){
-    performance.getAllPerformances().then((performances)=>{
-        res.send(performances)
-    })
+async function getAllPerformances(req, res){
+  try{
+    const performances = await performance.getAllPerformances()
+      res.send(performances)
+  }catch(err) {
+    next(err)
+  }
 }
 
-function getOnePerformance(req, res){
+async function getOnePerformance(req, res){
+  try{
     let id = req.params.id
-    performance.getOnePerformance(id).then((performance)=>{
-        res.send(performance)
-    })
+    const singlePerformance = await performance.getOnePerformance(id)
+      res.send(singlePerformance)
+  }catch(err) {
+    next(err)
+  }
 }
 
 module.exports = {getAllPerformances, getOnePerformance}

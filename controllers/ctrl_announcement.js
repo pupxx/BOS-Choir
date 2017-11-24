@@ -1,9 +1,12 @@
 const announcement = require('../models/mdl_announcement.js')
 
-function getAllAnnouncements(req, res, next) {
-  announcement.getAllAnnouncements().then((announcements) => {
-    res.send(announcements)
-  })
+async function getAllAnnouncements(req, res, next) {
+  try{
+    const announcements = await announcement.getAllAnnouncements()
+      res.send(announcements)  
+  }catch(err){
+    next(err)
+  }
 }
 
 module.exports = { getAllAnnouncements }
