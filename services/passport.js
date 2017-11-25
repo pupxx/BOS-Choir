@@ -16,9 +16,16 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 let localOptions = { usernameField: 'email'};
 const localSignin = new LocalStrategy(localOptions, (email, password, done)=>{
-    console.log(email);
    auth.checkForUser(email).then((user)=>{
-       console.log(user);
+       if(!user){
+           let err = {message: "Could not find a user with that email address"};
+           return done(err, false)
+       }
+       if(user){
+           return done(null, user)
+       }else{
+           return done(null, false)
+       }
    })
 })
 

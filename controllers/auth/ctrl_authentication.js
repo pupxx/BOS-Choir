@@ -4,31 +4,29 @@ const jwt = require('jwt-simple');
 const config = require('../../config.js')
 
 //*************************** SIGNUP ********************************
+  function validateEmailAndPass (req, res, next) {   
+    if(!req.body.email) {
+      var err = 'Email field must not be blank'
+      next(err)
+    }
+    if(!req.body.email.includes('@') || !req.body.email.includes('.com')) {
+      var err = 'Please enter valid email'
+      next(err)
+    }
+    
+    if(!req.body.password) {
+      var err = 'Password field must not be blank'
+      next(err)
+    }
+    
+    if(req.body.password.length < 6){
+      var err = 'password must be at least 6 characters long';
+      next(err)
+    }
+      //add validation for uppercase etc.    
+    next()
+  }
 
-function validateEmailAndPass (req, res, next) {
-  if(!req.body.email) {
-    var err = 'Email field must not be blank'
-    next(err)
-  }
-  if(!req.body.email.includes('@') || !req.body.email.includes('.com')) {
-    var err = 'Please enter valid email'
-    next(err)
-  }
-  
-  if(!req.body.password) {
-    var err = 'Password field must not be blank'
-    next(err)
-  }
-  
-  if(req.body.password.length < 6){
-    var err = 'password must be at least 6 characters long';
-    next(err)
-  }
-
-    //add validation for uppercase etc.  
-  
-  next()
-}
 
 function checkForUser(req, res, next){
   var {email, password} = req.body;
@@ -69,7 +67,9 @@ function tokenForUser(user){
 
 //********************* SIGNIN AUTHENTICATION *************
 
+function signin(req, res, next){
+  res.send({token: tokenForUser(req.user), admin: req.user.admin})
+}
 
 
-
-module.exports = { validateEmailAndPass, checkForUser, addNewUser }
+module.exports = { validateEmailAndPass, checkForUser, addNewUser, signin }

@@ -7,6 +7,6 @@ const passport = require('passport');
 const requireSignin = passport.authenticate('local', {session: false})
 
 /* GET home page. */
-router.post('/', requireSignin);
+router.post('/',  authentication.validateEmailAndPass, requireSignin, authentication.signin);
 
 module.exports = router;
