@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt-as-promised');
 const passport = require('passport');
-const auth = require('../models/auth/mdl_signup');
+const authenticate = require('../models/auth/mdl_signup.js');
+const authorize = require('../models/auth/mdl_authorization.js');
 const config = require('../config');
 const JwtStrategy = require('passport-jwt').Strategy;
 const LocalStrategy = require('passport-local');
@@ -15,8 +16,13 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 // If match, call done with null, user.
 
 const localOptions = { usernameField: 'email' };
+const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+  secretOrKey: config.secret
+};
+
 const localSignin = new LocalStrategy(localOptions, (email, password, done) => {
-  auth.checkForUser(email).then(user => {
+  authenticate.checkForUser(email).then(user => {
     if (!user) {
       return done(null, false);
     }
@@ -38,4 +44,20 @@ const localSignin = new LocalStrategy(localOptions, (email, password, done) => {
   });
 });
 
+const jwtAuthorization = new JwtStrategy(jwtOptions, (payload, done) => {
+  console.log(payload);
+  authorize.findUser(payload.sub).then(user => {
+    if (!user) {
+      let err = { message: 'There was an error' };
+      return done(err, false);
+    }
+    if (user) {
+      done(null, user);
+    } else {
+      done(null, false);
+    }
+  });
+});
+
 passport.use(localSignin);
+passport.use(jwtAuthorization);
