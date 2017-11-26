@@ -5,25 +5,32 @@ const config = require('../../config.js');
 
 //  *************************** SIGNUP ********************************
 function validateEmailAndPass(req, res, next) {
-  if (!req.body.email) {
-    const err = 'Email field must not be blank';
+  const { email, password } = req.body;
+
+  if (!checkForEmailPass(email, password)) {
+    const err = 'Email and/or Password can not be blank.';
     next(err);
   }
-  if (!req.body.email.includes('@') || !req.body.email.includes('.com')) {
+
+  if (!email.includes('@')) {
     const err = 'Please enter valid email';
     next(err);
   }
 
-  if (!req.body.password) {
-    const err = 'Password field must not be blank';
+  if (password.length < 6) {
+    const err = 'Password must be at least 6 characters long';
     next(err);
   }
 
-  if (req.body.password.length < 6) {
-    const err = 'password must be at least 6 characters long';
+  if (!checkForUpperCase(password)) {
+    const err = 'Password must have at least one Capital letter';
     next(err);
   }
-  //  add validation for uppercase etc.
+
+  if (!hasANumber(password)) {
+    const err = 'Password must contain at least one number';
+    next(err);
+  }
   next();
 }
 
@@ -56,15 +63,45 @@ function addNewUser(req, res) {
     });
   });
 }
-// ******************  HELPER FUNCTION *******************
-function tokenForUser(user) {
-  const timeStamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timeStamp }, config.secret);
-}
 //  ********************* SIGNIN AUTHENTICATION *************
 
 function signin(req, res) {
   res.send({ token: tokenForUser(req.user), admin: req.user.admin });
+}
+
+// ******************  HELPER FUNCTIONS *******************
+
+function tokenForUser(user) {
+  const timeStamp = new Date().getTime();
+  return jwt.encode({ sub: user.id, iat: timeStamp }, config.secret);
+}
+
+function checkForEmailPass(email, pass) {
+  if (!email || !pass) {
+    return false;
+  }
+  return true;
+}
+
+function checkForUpperCase(str) {
+  const arr = str.split('');
+  const hasCap = arr.some(el => el === el.toUpperCase());
+  return hasCap;
+}
+
+function hasANumber(str) {
+  const arr = str.split('');
+  const hasNumber = [];
+  const mappedArr = arr.map(el => parseInt(el, 10));
+  mappedArr.forEach(el => {
+    if (el >= 0) {
+      hasNumber.push(el);
+    }
+  });
+  if (!hasNumber.length) {
+    return false;
+  }
+  return true;
 }
 
 module.exports = { validateEmailAndPass, checkForUser, addNewUser, signin };
