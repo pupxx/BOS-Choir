@@ -7,9 +7,8 @@ const router = express.Router();
 const requireAuth = passport.authenticate('jwt', { session: false });
 
 /* GET home page. */
-router.get('/', requireAuth, (req, res) => {
-  console.log('Hi there');
-});
+router.get('/', requireAuth, ctrl.getAllMembers);
 router.get('/:id', ctrl.getOneMember);
+router.get('/:id/profile', requireAuth, ctrl.getOneMember);
 
 module.exports = router;

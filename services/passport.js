@@ -45,17 +45,15 @@ const localSignin = new LocalStrategy(localOptions, (email, password, done) => {
 });
 
 const jwtAuthorization = new JwtStrategy(jwtOptions, (payload, done) => {
-  console.log(payload);
   authorize.findUser(payload.sub).then(user => {
     if (!user) {
-      let err = { message: 'There was an error' };
+      const err = { message: 'There was an error' };
       return done(err, false);
     }
     if (user) {
-      done(null, user);
-    } else {
-      done(null, false);
+      return done(null, user);
     }
+    return done(null, false);
   });
 });
 
