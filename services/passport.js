@@ -3,7 +3,7 @@ const passport = require('passport');
 const auth = require('../models/auth/mdl_signup');
 const config = require('../config');
 const JwtStrategy = require('passport-jwt').Strategy;
-const LocalStrategy = require('passport-local')
+const LocalStrategy = require('passport-local');
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 // Create a passport local strategy
@@ -14,19 +14,28 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 // If password does not match email, then call done with null, false.
 // If match, call done with null, user.
 
-let localOptions = { usernameField: 'email'};
-const localSignin = new LocalStrategy(localOptions, (email, password, done)=>{
-   auth.checkForUser(email).then((user)=>{
-       if(!user){
-           let err = {message: "Could not find a user with that email address"};
-           return done(err, false)
-       }
-       if(user){
-           return done(null, user)
-       }else{
-           return done(null, false)
-       }
-   })
-})
+const localOptions = { usernameField: 'email' };
+const localSignin = new LocalStrategy(localOptions, (email, password, done) => {
+  auth.checkForUser(email).then(user => {
+    if (!user) {
+      return done(null, false);
+    }
+    const signedInUser = user;
+    return bcrypt
+      .compare(password, signedInUser.hashed_password)
+      .then(match => {
+        if (!match) {
+          return done(null, false);
+        }
+        delete signedInUser.hashed_password;
 
-passport.use(localSignin)
+        return done(null, signedInUser);
+      })
+      .catch(bcrypt.MISMATCH_ERROR, () => {
+        throw { status: 400, message: 'Bad email or password' };
+      })
+      .catch(err => done(err));
+  });
+});
+
+passport.use(localSignin);
