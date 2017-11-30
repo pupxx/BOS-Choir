@@ -44,6 +44,8 @@ const localSignin = new LocalStrategy(localOptions, (email, password, done) => {
   });
 });
 
+//  This pulls the id from the jwt.
+//  If user exists, the user is available as req.user in the controller function.
 const jwtAuthorization = new JwtStrategy(jwtOptions, (payload, done) => {
   authorize.findUser(payload.sub).then(user => {
     if (!user) {

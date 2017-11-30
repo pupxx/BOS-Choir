@@ -12,13 +12,12 @@ var rehearsals = require('./routes/rehearsal');
 var signup = require('./routes/signup');
 var signin = require('./routes/signin');
 
-
 var app = express();
 
 //CORS
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
@@ -30,13 +29,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/churches', church)
-app.use('/announcements', announcement)
-app.use('/performances', performance)
-app.use('/members', member)
-app.use('/rehearsals', rehearsals)
-app.use('/signup', signup)
-app.use('/signin', signin)
+app.use('/churches', church);
+app.use('/announcements', announcement);
+app.use('/performances', performance);
+app.use('/members', member);
+app.use('/rehearsals', rehearsals);
+app.use('/signup', signup);
+app.use('/signin', signin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -52,7 +51,7 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
+  res.send(err.status || 500);
   res.send(err);
 });
 

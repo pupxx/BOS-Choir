@@ -57,8 +57,7 @@ function addNewUser(req, res) {
       const newUser = addedUser[0];
       delete newUser.hashed_password;
       res.send({
-        token: tokenForUser(newUser),
-        admin: newUser.admin
+        token: tokenForUser(newUser)
       });
     });
   });
@@ -66,14 +65,14 @@ function addNewUser(req, res) {
 //  ********************* SIGNIN AUTHENTICATION *************
 
 function signin(req, res) {
-  res.send({ token: tokenForUser(req.user), admin: req.user.admin });
+  res.send({ token: tokenForUser(req.user) });
 }
 
 // ******************  HELPER FUNCTIONS *******************
 
 function tokenForUser(user) {
   const timeStamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timeStamp }, config.secret);
+  return jwt.encode({ sub: user.id, iat: timeStamp, isAdmin: user.admin }, config.secret);
 }
 
 function checkForEmailPass(email, pass) {
