@@ -1,28 +1,28 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var church = require('./routes/church');
-var announcement = require('./routes/announcement');
-var performance = require('./routes/performance');
-var member = require('./routes/member');
-var rehearsals = require('./routes/rehearsal');
-var signup = require('./routes/signup');
-var signin = require('./routes/signin');
+const index = require('./routes/index');
+const church = require('./routes/church');
+const announcement = require('./routes/announcement');
+const performance = require('./routes/performance');
+const member = require('./routes/member');
+const rehearsals = require('./routes/rehearsal');
+const signup = require('./routes/signup');
+const signin = require('./routes/signin');
 
-var app = express();
+const app = express();
 
-//CORS
-app.use(function(req, res, next) {
+//  CORS
+app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//  app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
