@@ -8,27 +8,27 @@ function validateEmailAndPass(req, res, next) {
   const { email, password } = req.body;
 
   if (!checkForEmailPass(email, password)) {
-    const err = 'Email and/or Password can not be blank.';
+    const err = { status: 400, message: 'Email and/or Password can not be blank.' };
     next(err);
   }
 
   if (!email.includes('@')) {
-    const err = 'Please enter valid email';
+    const err = { status: 400, message: 'Please enter valid email' };
     next(err);
   }
 
   if (password.length < 6) {
-    const err = 'Password must be at least 6 characters long';
+    const err = { status: 400, message: 'Password must be at least 6 characters long' };
     next(err);
   }
 
   if (!checkForUpperCase(password)) {
-    const err = 'Password must have at least one Capital letter';
+    const err = { status: 400, message: 'Password must have at least one Capital letter' };
     next(err);
   }
 
   if (!hasANumber(password)) {
-    const err = 'Password must contain at least one number';
+    const err = { status: 400, message: 'Password must contain at least one number' };
     next(err);
   }
   next();
@@ -38,7 +38,7 @@ function checkForUser(req, res, next) {
   const { email } = req.body;
   auth.checkForUser(email).then(user => {
     if (user) {
-      const err = 'This user already exists';
+      const err = { status: 400, message: 'This user already exists' };
       next(err);
     } else {
       next();

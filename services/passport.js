@@ -49,7 +49,7 @@ const localSignin = new LocalStrategy(localOptions, (email, password, done) => {
 const jwtAuthorization = new JwtStrategy(jwtOptions, (payload, done) => {
   authorize.findUser(payload.sub).then(user => {
     if (!user) {
-      const err = { message: 'There was an error' };
+      const err = { status: 401, message: 'There was an error' };
       return done(err, false);
     }
     if (user) {
