@@ -10,24 +10,16 @@ function validateEmailAndPass(req, res, next) {
   if (!checkForEmailPass(email, password)) {
     const err = { status: 400, message: 'Email and/or Password can not be blank.' };
     next(err);
-  }
-
-  if (!email.includes('@')) {
+  } else if (!email.includes('@')) {
     const err = { status: 400, message: 'Please enter valid email' };
     next(err);
-  }
-
-  if (password.length < 6) {
+  } else if (password.length < 6) {
     const err = { status: 400, message: 'Password must be at least 6 characters long' };
     next(err);
-  }
-
-  if (!checkForUpperCase(password)) {
+  } else if (!checkForUpperCase(password)) {
     const err = { status: 400, message: 'Password must have at least one Capital letter' };
     next(err);
-  }
-
-  if (!hasANumber(password)) {
+  } else if (!hasANumber(password)) {
     const err = { status: 400, message: 'Password must contain at least one number' };
     next(err);
   }
