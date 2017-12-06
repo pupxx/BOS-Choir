@@ -6,21 +6,21 @@ const config = require('../../config.js');
 //  *************************** SIGNUP ********************************
 function validateEmailAndPass(req, res, next) {
   const { email, password } = req.body;
-
+  const status = 400;
   if (!checkForEmailPass(email, password)) {
-    const err = { status: 400, message: 'Email and/or Password can not be blank.' };
+    const err = { status, message: 'Email and/or Password can not be blank.' };
     next(err);
   } else if (!email.includes('@')) {
-    const err = { status: 400, message: 'Please enter valid email' };
+    const err = { status, message: 'Please enter valid email' };
     next(err);
   } else if (password.length < 6) {
-    const err = { status: 400, message: 'Password must be at least 6 characters long' };
+    const err = { status, message: 'Password must be at least 6 characters long' };
     next(err);
   } else if (!checkForUpperCase(password)) {
-    const err = { status: 400, message: 'Password must have at least one Capital letter' };
+    const err = { status, message: 'Password must have at least one Capital letter' };
     next(err);
   } else if (!hasANumber(password)) {
-    const err = { status: 400, message: 'Password must contain at least one number' };
+    const err = { status, message: 'Password must contain at least one number' };
     next(err);
   }
   next();
