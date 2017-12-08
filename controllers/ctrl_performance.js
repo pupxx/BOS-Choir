@@ -9,6 +9,15 @@ async function getAllPerformances(req, res, next) {
   }
 }
 
+async function getAllProtectedPerformances(req, res, next) {
+  try {
+    const performances = await performance.getAllPerformances();
+    res.send(performances);
+  } catch (err) {
+    next(err);
+  }
+}
+
 async function getOnePerformance(req, res, next) {
   try {
     const { id } = req.params;
@@ -19,4 +28,4 @@ async function getOnePerformance(req, res, next) {
   }
 }
 
-module.exports = { getAllPerformances, getOnePerformance };
+module.exports = { getAllPerformances, getOnePerformance, getAllProtectedPerformances };

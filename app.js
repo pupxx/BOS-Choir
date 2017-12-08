@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const index = require('./routes/index');
 const church = require('./routes/church');
@@ -15,11 +16,7 @@ const signin = require('./routes/signin');
 const app = express();
 
 //  CORS
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+app.use(cors());
 
 // uncomment after placing your favicon in /public
 //  app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

@@ -32,7 +32,6 @@ const localSignin = new LocalStrategy(localOptions, (email, password, done) => {
       .then(match => {
         if (!match) {
           return done(null, false);
-          console.log('hello');
         }
         delete signedInUser.hashed_password;
 
