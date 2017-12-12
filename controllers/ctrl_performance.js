@@ -10,8 +10,9 @@ async function getAllPerformances(req, res, next) {
 }
 
 async function getAllProtectedPerformances(req, res, next) {
+  const { id } = req.user;
   try {
-    const performances = await performance.getAllPerformances();
+    const performances = await performance.getMembersPerformances(id);
     res.send(performances);
   } catch (err) {
     next(err);
