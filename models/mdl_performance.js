@@ -1,7 +1,12 @@
 const knex = require('../db/connection.js');
 
 class Performance {
-  static getAllPerformances() {
+  static getAllPerformances(id) {
+    if (id) {
+      return knex('performance')
+        .innerJoin('church', 'church.id', 'church_id')
+        .select('*', 'church.id as churchID', 'performance.id as performanceID');
+    }
     return knex('performance');
   }
 
@@ -10,10 +15,12 @@ class Performance {
   }
 
   static async getMembersPerformances(id) {
-    const performances = await this.getAllPerformances();
+    const performances = await this.getAllPerformances(id);
     const membersPerformances = await knex('members_performances')
       .select('*', 'performance_id as performanceID')
       .where('member_id', id);
+
+    // .innerJoin('piece', 'piece.id', 'performances_pieces.piece_id');
 
     for (let j = 0; j < performances.length; j += 1) {
       for (let i = 0; i < membersPerformances.length; i += 1) {
@@ -22,7 +29,21 @@ class Performance {
         }
       }
     }
-    return performances;
+
+    const promises = performances.map(el => {
+      return knex('performances_pieces')
+        .where('performances_pieces.performance_id', el.performanceID)
+        .innerJoin('piece', 'piece.id', 'performances_pieces.piece_id')
+        .select('*', 'piece.id as pieceID', 'performances_pieces.id as perfPiecesID')
+        .then(pieces => {
+          console.log('hello');
+          // console.log(pieces);
+          el.pieces = pieces;
+          console.log(el);
+          return el;
+        });
+    });
+    return Promise.all(promises);
   }
 }
 

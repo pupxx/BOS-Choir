@@ -9,6 +9,6 @@ const requireAuth = passport.authenticate('jwt', { session: false });
 
 router.get('/', ctrl.getAllPerformances);
 router.get('/member/landing', requireAuth, ctrl.getAllProtectedPerformances);
-router.get('/:id', ctrl.getOnePerformance);
+router.get('/:id', requireAuth, ctrl.getOnePerformance);
 
 module.exports = router;
