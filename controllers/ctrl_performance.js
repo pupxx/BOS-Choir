@@ -23,6 +23,7 @@ async function getOnePerformance(req, res, next) {
   try {
     const { id } = req.params;
     const singlePerformance = await performance.getOnePerformance(id);
+    console.log(singlePerformance);
     res.send(singlePerformance);
   } catch (err) {
     next(err);

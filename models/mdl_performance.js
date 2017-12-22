@@ -10,10 +10,6 @@ class Performance {
     return knex('performance');
   }
 
-  static getOnePerformance(id) {
-    return knex('performance').where({ id });
-  }
-
   static async getMembersPerformances(id) {
     const performances = await this.getAllPerformances(id);
     const membersPerformances = await knex('members_performances')
@@ -36,10 +32,7 @@ class Performance {
         .innerJoin('piece', 'piece.id', 'performances_pieces.piece_id')
         .select('*', 'piece.id as pieceID', 'performances_pieces.id as perfPiecesID')
         .then(pieces => {
-          console.log('hello');
-          // console.log(pieces);
           el.pieces = pieces;
-          console.log(el);
           return el;
         });
     });
