@@ -23,11 +23,26 @@ async function getOnePerformance(req, res, next) {
   try {
     const { id } = req.params;
     const singlePerformance = await performance.getOnePerformance(id);
-    console.log(singlePerformance);
     res.send(singlePerformance);
   } catch (err) {
     next(err);
   }
 }
 
-module.exports = { getAllPerformances, getOnePerformance, getAllProtectedPerformances };
+async function performanceAttendanceTrue(req, res, next) {
+  try {
+    const performanceid = req.params.id;
+    const userid = req.user.id;
+    const attendance = await performance.performanceAttendanceTrue(userid, performanceid);
+    res.send(attendance);
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = {
+  getAllPerformances,
+  getOnePerformance,
+  getAllProtectedPerformances,
+  performanceAttendanceTrue
+};

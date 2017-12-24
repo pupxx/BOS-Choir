@@ -38,6 +38,18 @@ class Performance {
     });
     return Promise.all(promises);
   }
+
+  static async performanceAttendanceTrue(userid, performanceid) {
+    console.log(userid, 'this is the user id');
+    const attending = {
+      member_id: userid,
+      performance_id: performanceid
+    };
+    const attendance = await knex('members_performances')
+      .insert(attending)
+      .returning('*');
+    return attendance;
+  }
 }
 
 module.exports = Performance;
