@@ -40,13 +40,21 @@ class Performance {
   }
 
   static async performanceAttendanceTrue(userid, performanceid) {
-    console.log(userid, 'this is the user id');
     const attending = {
       member_id: userid,
       performance_id: performanceid
     };
     const attendance = await knex('members_performances')
       .insert(attending)
+      .returning('*');
+    return attendance;
+  }
+
+  static async performanceAttendanceFalse(userid, performanceid) {
+    const attendance = await knex('members_performances')
+      .del()
+      .where('member_id', userid)
+      .andWhere('performance_id', performanceid)
       .returning('*');
     return attendance;
   }

@@ -31,9 +31,22 @@ async function getOnePerformance(req, res, next) {
 
 async function performanceAttendanceTrue(req, res, next) {
   try {
-    const performanceid = req.params.id;
+    //  do some validation on req.body.id
+    const performanceid = req.body.id;
     const userid = req.user.id;
     const attendance = await performance.performanceAttendanceTrue(userid, performanceid);
+    res.send(attendance);
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function performanceAttendanceFalse(req, res, next) {
+  try {
+    const performanceID = req.params.id;
+    const userid = req.user.id;
+    const attendance = await performance.performanceAttendanceFalse(userid, performanceID);
+    console.log(attendance, 'in the control file');
     res.send(attendance);
   } catch (err) {
     next(err);
@@ -44,5 +57,6 @@ module.exports = {
   getAllPerformances,
   getOnePerformance,
   getAllProtectedPerformances,
-  performanceAttendanceTrue
+  performanceAttendanceTrue,
+  performanceAttendanceFalse
 };
