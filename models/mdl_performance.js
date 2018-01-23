@@ -15,8 +15,9 @@ class Performance {
     const membersPerformances = await knex('members_performances')
       .select('*', 'performance_id as performanceID')
       .where('member_id', id);
-
-    // .innerJoin('piece', 'piece.id', 'performances_pieces.piece_id');
+    const homeWard = await knex('member')
+      .select('church_id as homeWardID')
+      .where('member.id', id);
 
     for (let j = 0; j < performances.length; j += 1) {
       for (let i = 0; i < membersPerformances.length; i += 1) {
@@ -24,6 +25,7 @@ class Performance {
           performances[j].attending = true;
         }
       }
+      performances[j].homeWardID = homeWard[0].homeWardID;
     }
 
     const promises = performances.map(el => {
