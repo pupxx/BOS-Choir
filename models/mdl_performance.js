@@ -15,8 +15,8 @@ class Performance {
     const membersPerformances = await knex('members_performances')
       .select('*', 'performance_id as performanceID')
       .where('member_id', id);
-    const homeWard = await knex('member')
-      .select('church_id as homeWardID')
+    const memberFirstName = await knex('member')
+      .select('firstname')
       .where('member.id', id);
 
     for (let j = 0; j < performances.length; j += 1) {
@@ -25,7 +25,7 @@ class Performance {
           performances[j].attending = true;
         }
       }
-      performances[j].homeWardID = homeWard[0].homeWardID;
+      performances[j].firstname = memberFirstName[0].firstname;
     }
 
     const promises = performances.map(el => {
