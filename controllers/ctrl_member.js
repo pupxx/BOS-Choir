@@ -19,4 +19,14 @@ async function getOneMember(req, res, next) {
   }
 }
 
-module.exports = { getAllMembers, getOneMember };
+async function getMemberProfile(req, res, next) {
+  const { id } = req.user;
+  try {
+    const singleMember = await member.getMemberProfile(id);
+    res.send(singleMember);
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { getAllMembers, getOneMember, getMemberProfile };

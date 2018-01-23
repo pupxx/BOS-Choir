@@ -8,7 +8,8 @@ const requireAuth = passport.authenticate('jwt', { session: false });
 
 /* GET home page. */
 router.get('/', requireAuth, ctrl.getAllMembers);
-router.get('/:id', ctrl.getOneMember);
-router.get('/:id/profile', requireAuth, ctrl.getOneMember);
+router.get('/profile', requireAuth, ctrl.getMemberProfile);
+// router.get('/:id', ctrl.getOneMember);
+// router.get('/:id/profile', requireAuth, ctrl.getOneMember);
 
 module.exports = router;
