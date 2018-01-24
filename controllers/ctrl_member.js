@@ -9,10 +9,10 @@ async function getAllMembers(req, res, next) {
   }
 }
 
-async function getOneMember(req, res, next) {
+async function getOwnInfo(req, res, next) {
   try {
-    const { id } = req.params;
-    const singleMember = await member.getOneMember(id);
+    const { id } = req.user;
+    const singleMember = await member.getOwnInfo(id);
     res.send(singleMember);
   } catch (err) {
     next(err);
@@ -29,4 +29,4 @@ async function getMemberProfile(req, res, next) {
   }
 }
 
-module.exports = { getAllMembers, getOneMember, getMemberProfile };
+module.exports = { getAllMembers, getOwnInfo, getMemberProfile };

@@ -5,8 +5,20 @@ class Member {
     return knex('member');
   }
 
-  static getOneMember(id) {
-    return knex('member').where({ id });
+  static getOwnInfo(id) {
+    return knex('member')
+      .select(
+        'firstname',
+        'lastname',
+        'address1',
+        'address2',
+        'city',
+        'postal',
+        'phone',
+        'email',
+        'part'
+      )
+      .where({ id });
   }
 
   static async getMemberProfile(id) {

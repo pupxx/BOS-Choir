@@ -9,6 +9,7 @@ const requireAuth = passport.authenticate('jwt', { session: false });
 /* GET home page. */
 router.get('/', requireAuth, ctrl.getAllMembers);
 router.get('/profile', requireAuth, ctrl.getMemberProfile);
+router.get('/member-info', requireAuth, ctrl.getOwnInfo);
 // router.get('/:id', ctrl.getOneMember);
 // router.get('/:id/profile', requireAuth, ctrl.getOneMember);
 
