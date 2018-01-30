@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/churches', church);
+app.use('/churchs', church);
 app.use('/announcements', announcement);
 app.use('/performances', performance);
 app.use('/members', member);

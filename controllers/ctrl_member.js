@@ -29,4 +29,15 @@ async function getMemberProfile(req, res, next) {
   }
 }
 
-module.exports = { getAllMembers, getOwnInfo, getMemberProfile };
+async function updateProfile(req, res, next) {
+  const { id } = req.user;
+  const data = req.body;
+  try {
+    const updatedMember = await member.updateProfile(id, data);
+    res.send(updatedMember);
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { getAllMembers, getOwnInfo, getMemberProfile, updateProfile };
