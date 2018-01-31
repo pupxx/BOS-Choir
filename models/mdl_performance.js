@@ -18,7 +18,6 @@ class Performance {
     const memberNameAndID = await knex('member')
       .select('firstname', 'member.id as memberID')
       .where('member.id', id);
-    console.log(memberNameAndID);
 
     for (let j = 0; j < performances.length; j += 1) {
       for (let i = 0; i < membersPerformances.length; i += 1) {
