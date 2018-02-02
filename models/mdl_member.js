@@ -14,9 +14,11 @@ class Member {
         'address1',
         'address2',
         'city',
+        'prov',
         'postal',
         'phone',
-        'part'
+        'part',
+        'church_id as churchID'
       )
       .where({ id });
   }
