@@ -12,6 +12,7 @@ const member = require('./routes/member');
 const rehearsals = require('./routes/rehearsal');
 const signup = require('./routes/signup');
 const signin = require('./routes/signin');
+const admin = require('./routes/admin');
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use('/members', member);
 app.use('/rehearsals', rehearsals);
 app.use('/signup', signup);
 app.use('/signin', signin);
+app.use('/admin', admin);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

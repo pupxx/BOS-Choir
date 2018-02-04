@@ -18,6 +18,7 @@ class Member {
         'postal',
         'phone',
         'part',
+        'admin',
         'church_id as churchID'
       )
       .where({ id });
