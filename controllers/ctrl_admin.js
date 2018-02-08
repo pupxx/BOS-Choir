@@ -1,5 +1,6 @@
 const admin = require('../models/mdl_admin');
 
+//  For front end routing against admin true of false.
 async function checkIfAdmin(req, res, next) {
   try {
     const { id } = req.user;
@@ -10,7 +11,8 @@ async function checkIfAdmin(req, res, next) {
   }
 }
 
-async function requireAdmin(req, res, next) {
+// For back end routing against admin true or false.
+function requireAdmin(req, res, next) {
   const isAdmin = req.user.admin;
   if (isAdmin) {
     next();
