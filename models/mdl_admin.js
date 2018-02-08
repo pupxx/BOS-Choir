@@ -7,6 +7,25 @@ class Admin {
       .where({ id });
     return isAdmin;
   }
+
+  static async fetchAdminMemberList() {
+    const singleMember = await knex('member')
+      .select(
+        'member.id as memberID',
+        'firstname',
+        'lastname',
+        'address1',
+        'address2',
+        'city',
+        'postal',
+        'phone',
+        'email',
+        'churchname',
+        'part'
+      )
+      .innerJoin('church', 'church.id', 'member.church_id');
+    return singleMember;
+  }
 }
 
 module.exports = Admin;
