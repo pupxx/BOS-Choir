@@ -11,17 +11,12 @@ async function checkIfAdmin(req, res, next) {
 }
 
 async function requireAdmin(req, res, next) {
-  const { id } = req.user;
-  try {
-    const isAdmin = await admin.checkIfAdmin(id);
-    if (isAdmin[0].admin) {
-      next();
-    } else {
-      const error = { status: 401, message: 'Unauthorized' };
-      res.send(error);
-    }
-  } catch (error) {
-    next(error);
+  const isAdmin = req.user.admin;
+  if (isAdmin) {
+    next();
+  } else {
+    const err = { status: 401, message: 'Unauthorized' };
+    next(err);
   }
 }
 
