@@ -1,17 +1,14 @@
 const knex = require('../db/connection.js');
 
 class Performance {
-  static getAllPerformances(id) {
-    if (id) {
-      return knex('performance')
-        .innerJoin('church', 'church.id', 'church_id')
-        .select('*', 'church.id as churchID', 'performance.id as performanceID');
-    }
-    return knex('performance');
+  static getAllPerformances() {
+    return knex('performance')
+      .innerJoin('church', 'church.id', 'church_id')
+      .select('*', 'church.id as churchID', 'performance.id as performanceID');
   }
 
   static async getMembersPerformances(id) {
-    const performances = await this.getAllPerformances(id);
+    const performances = await this.getAllPerformances();
     const membersPerformances = await knex('members_performances')
       .select('*', 'performance_id as performanceID')
       .where('member_id', id);
