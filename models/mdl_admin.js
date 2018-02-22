@@ -17,11 +17,13 @@ class Admin {
         'address1',
         'address2',
         'city',
+        'prov',
         'postal',
         'phone',
         'email',
         'churchname',
-        'part'
+        'part',
+        'admin'
       )
       .innerJoin('church', 'church.id', 'member.church_id');
     return singleMember;

@@ -1,4 +1,5 @@
 const admin = require('../models/mdl_admin');
+const member = require('../models/mdl_member');
 
 //  For front end routing against admin true of false.
 async function checkIfAdmin(req, res, next) {
@@ -31,4 +32,14 @@ async function fetchAdminMemberList(req, res, next) {
   }
 }
 
-module.exports = { checkIfAdmin, requireAdmin, fetchAdminMemberList };
+async function getSingleMember(req, res, next) {
+  const { id } = req.params;
+  try {
+    const singleMember = await member.getMemberProfile(id);
+    res.send(singleMember[0]);
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { checkIfAdmin, requireAdmin, fetchAdminMemberList, getSingleMember };
