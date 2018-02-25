@@ -42,4 +42,20 @@ async function getSingleMember(req, res, next) {
   }
 }
 
-module.exports = { checkIfAdmin, requireAdmin, fetchAdminMemberList, getSingleMember };
+async function updateSingleMember(req, res, next) {
+  const { id } = req.params;
+  const data = req.body;
+  try {
+    const updatedMember = await member.updateProfile(id, data);
+    res.send(updatedMember);
+  } catch (error) {
+    next(error);
+  }
+}
+module.exports = {
+  checkIfAdmin,
+  requireAdmin,
+  fetchAdminMemberList,
+  getSingleMember,
+  updateSingleMember
+};
