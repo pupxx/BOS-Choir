@@ -52,10 +52,23 @@ async function updateSingleMember(req, res, next) {
     next(error);
   }
 }
+
+async function removeMember(req, res, next) {
+  const { id } = req.params;
+  try {
+    const deletedMember = await admin.deleteMember(id);
+    console.log(deletedMember, 'Here is the deleted Member Id');
+    res.send(deletedMember);
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   checkIfAdmin,
   requireAdmin,
   fetchAdminMemberList,
   getSingleMember,
-  updateSingleMember
+  updateSingleMember,
+  removeMember
 };

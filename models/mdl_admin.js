@@ -28,6 +28,14 @@ class Admin {
       .innerJoin('church', 'church.id', 'member.church_id');
     return singleMember;
   }
+
+  static async deleteMember(id) {
+    const deletedMember = knex('member')
+      .del()
+      .returning('id')
+      .where({ id });
+    return deletedMember;
+  }
 }
 
 module.exports = Admin;
