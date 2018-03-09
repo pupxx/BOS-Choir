@@ -23,6 +23,14 @@ class Church {
       .returning('id');
     return removedWardBranch;
   }
+
+  static async editWardBranch(id, data) {
+    const editedChurch = await knex('church')
+      .update(data)
+      .returning('*')
+      .where({ id });
+    return editedChurch;
+  }
 }
 
 module.exports = Church;

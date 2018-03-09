@@ -84,6 +84,17 @@ async function removeWardBranch(req, res, next) {
   }
 }
 
+async function editWardBranch(req, res, next) {
+  const { id } = req.params;
+  const churchData = req.body;
+  try {
+    const editedChurch = await church.editWardBranch(id, churchData);
+    res.send(editedChurch);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   checkIfAdmin,
   requireAdmin,
@@ -92,5 +103,6 @@ module.exports = {
   updateSingleMember,
   removeMember,
   addWardBranch,
-  removeWardBranch
+  removeWardBranch,
+  editWardBranch
 };
