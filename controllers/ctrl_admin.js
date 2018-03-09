@@ -1,5 +1,6 @@
 const admin = require('../models/mdl_admin');
 const member = require('../models/mdl_member');
+const church = require('../models/mdl_church');
 
 //  For front end routing against admin true of false.
 async function checkIfAdmin(req, res, next) {
@@ -57,10 +58,29 @@ async function removeMember(req, res, next) {
   const { id } = req.params;
   try {
     const deletedMember = await admin.deleteMember(id);
-    console.log(deletedMember, 'Here is the deleted Member Id');
     res.send(deletedMember);
   } catch (err) {
     next(err);
+  }
+}
+
+async function addWardBranch(req, res, next) {
+  const church = req.body;
+  try {
+    const addedChurch = await church.addWardBranch(church);
+    console.log(addedChurch);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function removeWardBranch(req, res, next) {
+  const { id } = req.params;
+  try {
+    const removedWardBranch = await church.removeWardBranch(id);
+    res.send(removedWardBranch);
+  } catch (error) {
+    next(error);
   }
 }
 
@@ -70,5 +90,7 @@ module.exports = {
   fetchAdminMemberList,
   getSingleMember,
   updateSingleMember,
-  removeMember
+  removeMember,
+  addWardBranch,
+  removeWardBranch
 };
