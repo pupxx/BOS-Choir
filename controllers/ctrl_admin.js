@@ -65,10 +65,10 @@ async function removeMember(req, res, next) {
 }
 
 async function addWardBranch(req, res, next) {
-  const church = req.body;
+  const churchToAdd = req.body;
   try {
-    const addedChurch = await church.addWardBranch(church);
-    console.log(addedChurch);
+    const addedChurch = await church.addWardBranch(churchToAdd);
+    res.send(addedChurch);
   } catch (error) {
     next(error);
   }

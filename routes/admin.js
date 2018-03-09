@@ -15,7 +15,7 @@ router.get('/single-member/:id', requireAuth, ctrl.requireAdmin, ctrl.getSingleM
 router.get('/ward-branch-list', requireAuth, ctrl.requireAdmin, church.getAllChurches);
 router.patch('/update-single-member/:id', requireAuth, ctrl.requireAdmin, ctrl.updateSingleMember);
 router.delete('/remove-member/:id', requireAuth, ctrl.requireAdmin, ctrl.removeMember);
-router.get('/add-ward-branch', requireAuth, ctrl.requireAdmin, ctrl.addWardBranch);
+router.post('/add-ward-branch', requireAuth, ctrl.requireAdmin, ctrl.addWardBranch);
 router.delete('/remove-ward/:id', requireAuth, ctrl.requireAdmin, ctrl.removeWardBranch);
 
 module.exports = router;
