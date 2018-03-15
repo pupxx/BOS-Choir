@@ -19,10 +19,10 @@ async function getAllProtectedPerformances(req, res, next) {
   }
 }
 
-async function getOnePerformance(req, res, next) {
+async function getSinglePerformance(req, res, next) {
+  const { id } = req.params;
   try {
-    const { id } = req.params;
-    const singlePerformance = await performance.getOnePerformance(id);
+    const singlePerformance = await performance.getSinglePerformance(id);
     res.send(singlePerformance);
   } catch (err) {
     next(err);
@@ -58,7 +58,7 @@ async function performanceAttendanceFalse(req, res, next) {
 
 module.exports = {
   getAllPerformances,
-  getOnePerformance,
+  getSinglePerformance,
   getAllProtectedPerformances,
   performanceAttendanceTrue,
   performanceAttendanceFalse

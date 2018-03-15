@@ -36,11 +36,6 @@ class Admin {
       .where({ id });
     return deletedMember;
   }
-
-  // static async getChurchList() {
-  //   const churchList = knex('church').select('*', 'church.id as churchID');
-  //   return churchList;
-  // }
 }
 
 module.exports = Admin;

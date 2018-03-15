@@ -1,10 +1,32 @@
 const knex = require('../db/connection.js');
+const moment = require('moment');
 
 class Performance {
-  static getAllPerformances() {
-    return knex('performance')
-      .innerJoin('church', 'church.id', 'church_id')
-      .select('*', 'church.id as churchID', 'performance.id as performanceID');
+  // static async getAllPerformances() {
+  //   const performances = await knex('performance')
+  //     .innerJoin('church', 'church.id', 'church_id')
+  //     .select('*', 'church.id as churchID', 'performance.id as performanceID');
+  //   return performances;
+  // }
+
+  static async getAllPerformances() {
+    const performances = await knex('performance')
+      .select('*', 'performance.id as performanceID', 'church.id as churchID')
+      .innerJoin('church', 'performance.church_id', 'church.id');
+
+    const promises = performances.map(el => {
+      return knex('performances_pieces')
+        .where('performances_pieces.performance_id', el.performanceID)
+        .innerJoin('piece', 'piece.id', 'performances_pieces.piece_id')
+        .select('*', 'piece.id as pieceID', 'performances_pieces.id as perfPiecesID')
+        .then(pieces => {
+          el.pieces = pieces;
+          el.perfyear = moment(el.perfdate).format('YYYY');
+          return el;
+        });
+    });
+
+    return Promise.all(promises);
   }
 
   static async getMembersPerformances(id) {
@@ -58,6 +80,10 @@ class Performance {
       .returning('*');
     return attendance;
   }
+
+  // static async getSinglePerformance(id) {
+  //   const singlePerformance = await knex('performance').where({ id });
+  // }
 }
 
 module.exports = Performance;

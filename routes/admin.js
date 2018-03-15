@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const ctrl = require('../controllers/ctrl_admin');
 const church = require('../controllers/ctrl_church');
+const performance = require('../controllers/ctrl_performance');
 const passport = require('passport');
 const passportService = require('../services/passport');
 
@@ -18,5 +19,7 @@ router.delete('/remove-member/:id', requireAuth, ctrl.requireAdmin, ctrl.removeM
 router.post('/add-ward-branch', requireAuth, ctrl.requireAdmin, ctrl.addWardBranch);
 router.delete('/remove-ward/:id', requireAuth, ctrl.requireAdmin, ctrl.removeWardBranch);
 router.patch('/update-ward-branch/:id', requireAuth, ctrl.requireAdmin, ctrl.editWardBranch);
+router.get('/performance/:id', requireAuth, ctrl.requireAdmin, performance.getSinglePerformance);
+router.get('/performances', requireAuth, ctrl.requireAdmin, performance.getAllPerformances);
 
 module.exports = router;
