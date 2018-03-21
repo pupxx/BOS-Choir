@@ -1,5 +1,6 @@
 const knex = require('../db/connection.js');
 const moment = require('moment');
+const twelve = require('twentyfour-to-twelve');
 
 class Performance {
   // static async getAllPerformances() {
@@ -22,6 +23,8 @@ class Performance {
         .then(pieces => {
           el.pieces = pieces;
           el.perfyear = moment(el.perfdate).format('YYYY');
+          el.formattedDate = moment(el.perfdate).format('LL');
+
           return el;
         });
     });
@@ -81,9 +84,30 @@ class Performance {
     return attendance;
   }
 
-  // static async getSinglePerformance(id) {
-  //   const singlePerformance = await knex('performance').where({ id });
-  // }
+  static async getSinglePerformance(id) {
+    const singlePerformance = await knex('performance')
+      .innerJoin('church', 'performance.church_id', 'church.id')
+      .where('performance.id', id)
+      .select('*', 'performance.id as performanceID', 'church.id as churchID');
+    // const singlePerformanceId = singlePerformance[0].performanceID;
+    singlePerformance[0].formattedDate = moment(singlePerformance[0].perfdate).format('LL');
+    singlePerformance[0].formattedTime = twelve(singlePerformance[0].perftime);
+
+    const pieces = await knex('performances_pieces')
+      .select('*', 'piece.id as pieceID')
+      .innerJoin('piece', 'piece.id', 'performances_pieces.piece_id')
+      .where('performances_pieces.performance_id', id);
+    singlePerformance[0].pieces = pieces;
+
+    const performanceAttendance = await knex('members_performances')
+      .select('*', 'member.id as memberID')
+      .innerJoin('member', 'member.id', 'members_performances.member_id')
+      .where('members_performances.performance_id', id);
+
+    singlePerformance[0].performanceAttendance = performanceAttendance;
+
+    return singlePerformance;
+  }
 }
 
 module.exports = Performance;
