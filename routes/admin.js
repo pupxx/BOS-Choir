@@ -19,7 +19,6 @@ router.delete('/remove-member/:id', requireAuth, ctrl.requireAdmin, ctrl.removeM
 router.post('/add-ward-branch', requireAuth, ctrl.requireAdmin, ctrl.addWardBranch);
 router.delete('/remove-ward/:id', requireAuth, ctrl.requireAdmin, ctrl.removeWardBranch);
 router.patch('/update-ward-branch/:id', requireAuth, ctrl.requireAdmin, ctrl.editWardBranch);
-router.get('/performance/:id', requireAuth, ctrl.requireAdmin, performance.getSinglePerformance);
 router.get('/performances', requireAuth, ctrl.requireAdmin, performance.getAllPerformances);
 router.get('/performance/:id', requireAuth, ctrl.requireAdmin, performance.getSinglePerformance);
 
