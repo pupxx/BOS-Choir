@@ -21,5 +21,11 @@ router.delete('/remove-ward/:id', requireAuth, ctrl.requireAdmin, ctrl.removeWar
 router.patch('/update-ward-branch/:id', requireAuth, ctrl.requireAdmin, ctrl.editWardBranch);
 router.get('/performances', requireAuth, ctrl.requireAdmin, performance.getAllPerformances);
 router.get('/performance/:id', requireAuth, ctrl.requireAdmin, performance.getSinglePerformance);
+router.get(
+  '/performance-attendance/:id',
+  requireAuth,
+  ctrl.requireAdmin,
+  performance.getPerformanceAttendance
+);
 
 module.exports = router;

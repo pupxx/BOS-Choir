@@ -99,14 +99,17 @@ class Performance {
       .where('performances_pieces.performance_id', id);
     singlePerformance[0].pieces = pieces;
 
+    return singlePerformance;
+  }
+
+  static async getPerformanceAttendance(id) {
     const performanceAttendance = await knex('members_performances')
       .select('*', 'member.id as memberID')
       .innerJoin('member', 'member.id', 'members_performances.member_id')
+      .innerJoin('church', 'member.church_id', 'church.id')
       .where('members_performances.performance_id', id);
 
-    singlePerformance[0].performanceAttendance = performanceAttendance;
-
-    return singlePerformance;
+    return performanceAttendance;
   }
 }
 

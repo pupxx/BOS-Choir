@@ -29,6 +29,16 @@ async function getSinglePerformance(req, res, next) {
   }
 }
 
+async function getPerformanceAttendance(req, res, next) {
+  const { id } = req.params;
+  try {
+    const attendance = await performance.getPerformanceAttendance(id);
+    res.send(attendance);
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function performanceAttendanceTrue(req, res, next) {
   try {
     if (typeof req.body.id !== 'number') {
@@ -61,5 +71,6 @@ module.exports = {
   getSinglePerformance,
   getAllProtectedPerformances,
   performanceAttendanceTrue,
-  performanceAttendanceFalse
+  performanceAttendanceFalse,
+  getPerformanceAttendance
 };
