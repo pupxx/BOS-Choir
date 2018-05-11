@@ -27,5 +27,11 @@ router.get(
   ctrl.requireAdmin,
   performance.getPerformanceAttendance
 );
+router.patch(
+  '/update-performance/:id',
+  requireAuth,
+  ctrl.requireAdmin,
+  performance.updatePerformance
+);
 
 module.exports = router;

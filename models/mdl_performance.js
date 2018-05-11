@@ -102,6 +102,16 @@ class Performance {
     return singlePerformance;
   }
 
+  static async editPerformance(id, data) {
+    console.log(data);
+    const editedPerformance = await knex('performance')
+      .update(data)
+      .returning('*')
+      .where({ id });
+    console.log(editedPerformance, '%%%%%%%%%%%%%%%)');
+    return editedPerformance;
+  }
+
   static async getPerformanceAttendance(id) {
     const performanceAttendance = await knex('members_performances')
       .select('*', 'member.id as memberID')

@@ -29,6 +29,19 @@ async function getSinglePerformance(req, res, next) {
   }
 }
 
+async function updatePerformance(req, res, next) {
+  const { id } = req.params;
+  const data = req.body;
+  try {
+    const editedPerformance = await performance.editPerformance(id, data);
+    console.log(editedPerformance);
+    // res.send(editedPerformance[0]);
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
+
 async function getPerformanceAttendance(req, res, next) {
   const { id } = req.params;
   try {
@@ -72,5 +85,6 @@ module.exports = {
   getAllProtectedPerformances,
   performanceAttendanceTrue,
   performanceAttendanceFalse,
-  getPerformanceAttendance
+  getPerformanceAttendance,
+  updatePerformance
 };
