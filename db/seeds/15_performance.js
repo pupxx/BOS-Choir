@@ -6,7 +6,7 @@ exports.seed = knex => {
         {
           id: 1,
           perfname: 'Christmas',
-          perfdate: '2017-12-03',
+          perfdate: '12/3/2017',
           perftime: '18:00:00',
           menattire: 'White shirts and dark pants',
           womenattire: 'Blue blouse and dark skirt',
