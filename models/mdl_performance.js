@@ -103,12 +103,10 @@ class Performance {
   }
 
   static async editPerformance(id, data) {
-    console.log(data);
     const editedPerformance = await knex('performance')
       .update(data)
       .returning('*')
       .where({ id });
-    console.log(editedPerformance, '%%%%%%%%%%%%%%%)');
     return editedPerformance;
   }
 

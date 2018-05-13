@@ -31,13 +31,12 @@ async function getSinglePerformance(req, res, next) {
 
 async function updatePerformance(req, res, next) {
   const { id } = req.params;
-  const data = req.body;
+  const { perfname, perfdate, perftime, menattire, womenattire } = req.body;
+  const performanceInfo = { perfname, perfdate, perftime, menattire, womenattire };
   try {
-    const editedPerformance = await performance.editPerformance(id, data);
-    console.log(editedPerformance);
-    // res.send(editedPerformance[0]);
+    const editedPerformance = await performance.editPerformance(id, performanceInfo);
+    res.send(editedPerformance);
   } catch (err) {
-    console.log(err);
     next(err);
   }
 }
